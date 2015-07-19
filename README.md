@@ -27,7 +27,7 @@ And run composer to update your dependencies:
 
 The following gateways are provided by this package:
 
-* Cybersource
+* Flo2cash
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
