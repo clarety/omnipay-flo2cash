@@ -1,5 +1,6 @@
-# omnipay-flo2cash
-An Omnipay driver for Flo2cash Merchant gateway using Payments WS
+# Omnipay: Flo2cash
+
+**Flo2cash driver for the Omnipay PHP payment processing library**
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements 2Checkout support for Omnipay.
