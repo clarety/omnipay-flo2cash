@@ -21,12 +21,12 @@ class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'Dummy';
+        return 'Flo2cash Payments WS';
     }
 
     public function getDefaultParameters()
     {
-        return array('AccountId' => 'myMerchantId',
+        return array('AccountId' => 'myAccountId',
                      'Username' => 'myUsername',
                      'Password' => 'myPassword',
                      );
