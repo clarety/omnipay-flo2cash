@@ -27,9 +27,9 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array('AccountId' => 'myMerchantId',
-					 'Username' => 'myUsername',
-					 'Password' => 'myPassword',
-					 );
+                     'Username' => 'myUsername',
+                     'Password' => 'myPassword',
+                     );
     }
 
     public function authorize(array $parameters = array())
@@ -41,25 +41,25 @@ class Gateway extends AbstractGateway
     {
         return $this->authorize($parameters);
     }
-	
-	public function setAccountId($value){
-		 return $this->setParameter('AccountId', $value);
-	}	
-	public function getAccountId(){
-		 return $this->getParameter('AccountId', $value);
-	}	
-	public function setUsername($value){
-		 return $this->setParameter('Username', $value);
-	}	
-	public function getUsername(){
-		 return $this->getParameter('Username', $value);
-	}	
-	public function setPassword($value){
-		 return $this->setParameter('Password', $value);
-	}	
-	public function getPassword(){
-		 return $this->getParameter('Password', $value);
-	}
-	
+    
+    public function setAccountId($value){
+         return $this->setParameter('AccountId', $value);
+    }	
+    public function getAccountId(){
+         return $this->getParameter('AccountId', $value);
+    }	
+    public function setUsername($value){
+         return $this->setParameter('Username', $value);
+    }	
+    public function getUsername(){
+         return $this->getParameter('Username', $value);
+    }	
+    public function setPassword($value){
+         return $this->setParameter('Password', $value);
+    }	
+    public function getPassword(){
+         return $this->getParameter('Password', $value);
+    }
+    
 
 }
