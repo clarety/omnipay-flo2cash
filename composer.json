@@ -1,25 +1,21 @@
 {
     "name": "omnipay/flo2cash",
     "type": "library",
-    "description": "Dummy driver for the Omnipay payment processing library",
+    "description": "flo2cash driver for the Omnipay payment processing library",
     "keywords": [
-        "dummy",
+        "flo2cash",
         "gateway",
         "merchant",
         "omnipay",
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/thephpleague/omnipay-dummy",
+    "homepage": "https://github.com/guisea/omnipay-flo2cash",
     "license": "MIT",
     "authors": [
         {
-            "name": "Adrian Macneil",
-            "email": "adrian@adrianmacneil.com"
-        },
-        {
-            "name": "Omnipay Contributors",
-            "homepage": "https://github.com/thephpleague/omnipay-dummy/contributors"
+            "name": "Aaron Guise",
+            "email": "aaron@guise.net.nz"
         }
     ],
     "autoload": {
