@@ -61,7 +61,7 @@ class Gateway extends AbstractGateway
     {
          return $this->getParameter('Username', $value);
     }
-	
+    
     public function setPassword($value)
     {
          return $this->setParameter('Password', $value);
@@ -71,6 +71,4 @@ class Gateway extends AbstractGateway
     {
          return $this->getParameter('Password', $value);
     }
-    
-
 }
