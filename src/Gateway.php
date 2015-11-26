@@ -49,7 +49,7 @@ class Gateway extends AbstractGateway
     
     public function getAccountId()
     {
-         return $this->getParameter('AccountId', $value);
+         return $this->getParameter('AccountId');
     }
     
     public function setUsername($value)
@@ -59,7 +59,7 @@ class Gateway extends AbstractGateway
     
     public function getUsername()
     {
-         return $this->getParameter('Username', $value);
+         return $this->getParameter('Username');
     }
     
     public function setPassword($value)
@@ -69,6 +69,6 @@ class Gateway extends AbstractGateway
     
     public function getPassword()
     {
-         return $this->getParameter('Password', $value);
+         return $this->getParameter('Password');
     }
 }
