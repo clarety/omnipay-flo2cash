@@ -32,7 +32,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $response;
 
     /**
-     * @var float The amount of time in seconds to wait for both a connection and a response. Total potential wait time is this value times 2 (connection + response).
+     * @var float The amount of time in seconds to wait for both a connection and a response.
+     * Total potential wait time is this value times 2 (connection + response).
      */
     public $timeout = 10;
 
@@ -71,7 +72,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         // options we pass into the soap client
         $soap_options = array(
-            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,        // turn on HTTP compression
+            'compression' => SOAP_COMPRESSION_ACCEPT |
+                             SOAP_COMPRESSION_GZIP |
+                             SOAP_COMPRESSION_DEFLATE,  // turn on HTTP compression
             'encoding' => 'utf-8',        // set the internal character encoding to avoid random conversions
             'exceptions' => true,        // throw SoapFault exceptions when there is an error
             'connection_timeout' => $this->timeout,
