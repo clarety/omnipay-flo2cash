@@ -16,6 +16,10 @@
         {
             "name": "Aaron Guise",
             "email": "aaron@guise.net.nz"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/guisea/omnipay-flo2cash/contributors"
         }
     ],
     "autoload": {
