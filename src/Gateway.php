@@ -3,7 +3,7 @@
 namespace Omnipay\Flo2cash;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Dummy\Message\AuthorizeRequest;
+use Omnipay\Flo2cash\Message\AuthorizeRequest;
 
 /**
  * Dummy Gateway
@@ -21,25 +21,45 @@ class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'Flo2cash PaymentWS';
+        return 'Dummy';
     }
 
     public function getDefaultParameters()
     {
-         return array(
-            'AccountId' => 'myMerchantId',
-            'Username' => 'myUsername',
-            'Password' => 'myPassword',
-        );
+        return array('AccountId' => 'myMerchantId',
+					 'Username' => 'myUsername',
+					 'Password' => 'myPassword',
+					 );
     }
 
-/*     public function authorize(array $parameters = array())
+    public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Flo2cash\Message\AuthorizeRequest', $parameters);
-    } */
+    }
 
     public function purchase(array $parameters = array())
     {
         return $this->authorize($parameters);
     }
+	
+	public function setAccountId($value){
+		 return $this->setParameter('AccountId', $value);
+	}	
+	public function getAccountId(){
+		 return $this->getParameter('AccountId', $value);
+	}	
+	public function setUsername($value){
+		 return $this->setParameter('Username', $value);
+	}	
+	public function getUsername(){
+		 return $this->getParameter('Username', $value);
+	}	
+	public function setPassword($value){
+		 return $this->setParameter('Password', $value);
+	}	
+	public function getPassword(){
+		 return $this->getParameter('Password', $value);
+	}
+	
+
 }

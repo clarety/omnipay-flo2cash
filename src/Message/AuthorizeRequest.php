@@ -3,8 +3,6 @@
 namespace Omnipay\Flo2cash\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
-use DOMDocument;
-use SimpleXMLElement;
 
 /**
  * Dummy Authorize Request
@@ -28,4 +26,22 @@ class AuthorizeRequest extends AbstractRequest
 
         return $this->response = new Response($this, $data);
     }
+	public function setAccountId($value){
+		 return $this->setParameter('AccountId', $value);
+	}	
+	public function getAccountId(){
+		 return $this->getParameter('AccountId', $value);
+	}	
+	public function setUsername($value){
+		 return $this->setParameter('Username', $value);
+	}	
+	public function getUsername(){
+		 return $this->getParameter('Username', $value);
+	}	
+	public function setPassword($value){
+		 return $this->setParameter('Password', $value);
+	}	
+	public function getPassword(){
+		 return $this->getParameter('Password', $value);
+	}
 }

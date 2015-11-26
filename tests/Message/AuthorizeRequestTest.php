@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Dummy\Message;
+namespace Omnipay\Flo2cash\Message;
 
 use Omnipay\Tests\TestCase;
 

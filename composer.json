@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/dummy",
+    "name": "omnipay/flo2cash",
     "type": "library",
     "description": "Dummy driver for the Omnipay payment processing library",
     "keywords": [
