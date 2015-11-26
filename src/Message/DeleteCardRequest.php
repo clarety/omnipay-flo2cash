@@ -9,6 +9,8 @@
 namespace Omnipay\Flo2cash\Message;
 
 
-class DeleteCardRequest {
+class DeleteCardRequest extends AbstractRequest
+{
 
 }
+
