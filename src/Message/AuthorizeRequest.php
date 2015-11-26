@@ -26,22 +26,34 @@ class AuthorizeRequest extends AbstractRequest
 
         return $this->response = new Response($this, $data);
     }
-    public function setAccountId($value){
+    
+    public function setAccountId($value)
+    {
          return $this->setParameter('AccountId', $value);
     }
-    public function getAccountId(){
+    
+    public function getAccountId()
+    {
          return $this->getParameter('AccountId', $value);
     }
-    public function setUsername($value){
+    
+    public function setUsername($value)
+    {
          return $this->setParameter('Username', $value);
     }
-    public function getUsername(){
+    
+    public function getUsername()
+    {
          return $this->getParameter('Username', $value);
     }
-    public function setPassword($value){
+    
+    public function setPassword($value)
+    {
          return $this->setParameter('Password', $value);
     }
-    public function getPassword(){
+    
+    public function getPassword()
+    {
          return $this->getParameter('Password', $value);
     }
 }
