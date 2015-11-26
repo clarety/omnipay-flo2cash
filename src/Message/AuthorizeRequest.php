@@ -34,7 +34,7 @@ class AuthorizeRequest extends AbstractRequest
     
     public function getAccountId()
     {
-         return $this->getParameter('AccountId', $value);
+         return $this->getParameter('AccountId');
     }
     
     public function setUsername($value)
@@ -44,7 +44,7 @@ class AuthorizeRequest extends AbstractRequest
     
     public function getUsername()
     {
-         return $this->getParameter('Username', $value);
+         return $this->getParameter('Username');
     }
     
     public function setPassword($value)
@@ -54,6 +54,6 @@ class AuthorizeRequest extends AbstractRequest
     
     public function getPassword()
     {
-         return $this->getParameter('Password', $value);
+         return $this->getParameter('Password');
     }
 }
