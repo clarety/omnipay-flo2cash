@@ -29,9 +29,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         $document = new DOMDocument('1.0', 'UTF-8');
         $envelope = $document->appendChild(
-            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/',
-                'soap:Envelope')
-        );
+                                           $document->createElementNS(
+                                                                      'http://schemas.xmlsoap.org/soap/envelope/',
+                                                                       'soap:Envelope')
+                    );
         $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema-instance');
         $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema');
         $body = $envelope->appendChild($document->createElement('soap:Body'));
@@ -49,10 +50,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             "SOAPAction" => $this->getNamespace() . '/' . $TransactionType ,
             "Content-length" => strlen($xml));
 
-        $httpRequest = $this->httpClient->post($this->getEndpoint(),
-            $headers,
-            $xml
-        );
+        $httpRequest = $this->httpClient->post(
+                                               $this->getEndpoint(),
+                                               $headers,
+                                               $xml
+                       );
         $req = (string) $httpRequest;
         $file = 'log.txt';
         // Write the contents to the file,
