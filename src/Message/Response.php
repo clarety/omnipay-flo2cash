@@ -42,17 +42,17 @@ class Response extends AbstractResponse
          *
          */
         $replacements = array('<soap:Body>','</soap:Body>');
-        $data = str_replace($replacements,'',$data);
+        $data = str_replace($replacements, '', $data);
         $xml = new SimpleXMLElement($data);
         /*
          *  Data from the request can now be processed.
          */
-        if (isset($xml->AddCardResponse)){
+        if (isset($xml->AddCardResponse)){;
             # Response from AddCard returned
             $response = (array) $xml->AddCardResponse; # Cast the result as array
             if (isset($response['AddCardResult'])
                 && strlen($response['AddCardResult']) > 0)
-            {
+            {;
                 $this->status = "true";
                 $this->cardReference = $response['AddCardResult'];
                 $this->message = 'Success';
@@ -60,11 +60,11 @@ class Response extends AbstractResponse
 
         }
         elseif (isset($xml->RemoveCardResponse))
-        {
+        {;
             # Response from RemoveCard returned
             $response = (array) $xml->RemoveCardResponse; # Cast the result as array
             if (isset($response['RemoveCardResult']))
-            {
+            {;
                 $this->status = "true";
                 $this->message = 'Success';
             }
