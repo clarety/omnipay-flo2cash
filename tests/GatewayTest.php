@@ -18,7 +18,90 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    public function testAuthorizeSuccess()
+    public function testSupportsAuthorize()
+    {
+        $this->assertFalse($this->gateway->supportsAuthorize());
+    }
+
+    public function testSupportsCompleteAuthorize()
+    {
+        $this->assertFalse($this->gateway->supportsCompleteAuthorize());
+    }
+
+    public function testSupportsCapture()
+    {
+        $this->assertFalse($this->gateway->supportsCapture());
+    }
+
+    public function testSupportsPurchase()
+    {
+        $this->assertTrue($this->gateway->supportsPurchase());
+    }
+
+    public function testSupportsCompletePurchase()
+    {
+        $this->assertFalse($this->gateway->supportsCompletePurchase());
+    }
+
+    public function testSupportsRefund()
+    {
+        $this->assertTrue($this->gateway->supportsRefund());
+    }
+
+    public function testSupportsVoid()
+    {
+        $this->assertFalse($this->gateway->supportsVoid());
+    }
+
+    public function testSupportsCreateCard()
+    {
+        $this->assertTrue($this->gateway->supportsCreateCard());
+    }
+
+    public function testSupportsDeleteCard()
+    {
+        $this->assertTrue($this->gateway->supportsDeleteCard());
+    }
+
+    public function testSupportsUpdateCard()
+    {
+        $this->assertFalse($this->gateway->supportsUpdateCard());
+    }
+
+    public function testSupportsAcceptNotification()
+    {
+        $this->assertFalse($this->gateway->supportsAcceptNotification());
+    }
+
+/*    public function testPurchaseSuccess()
+    {
+        $this->setMockHttpResponse('TwoPartyPurchaseSuccess.txt');
+        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('12345', $response->getTransactionReference());
+        $this->assertSame('Approved', $response->getMessage());
+    }
+    public function testPurchaseFailure()
+    {
+        $this->setMockHttpResponse('TwoPartyPurchaseFailure.txt');
+        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('12345', $response->getTransactionReference());
+        $this->assertEquals('Declined', $response->getMessage());
+    }*/
+    public function testCreateCardSuccess()
+    {
+        $this->setMockHttpResponse('CreateCardSuccess.txt');
+        $response = $this->gateway->createCard($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('77719482654', $response->getCardReference());
+        $this->assertEquals('Success', $response->getMessage());
+    }
+
+/*    public function testAuthorizeSuccess()
     {
         // card numbers ending in even number should be successful
         $this->options['card']['number'] = '4242424242424242';
@@ -68,5 +151,5 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNotEmpty($response->getTransactionReference());
         $this->assertSame('Failure', $response->getMessage());
-    }
+    }*/
 }

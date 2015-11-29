@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET
+Strict-Transport-Security: max-age=31536000
+Date: Sat, 28 Nov 2015 10:00:52 GMT
+Content-Length: 387
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><AddCardResponse xmlns="http://www.flo2cash.co.nz/webservices/paymentwebservice"><AddCardResult>77719482654</AddCardResult></AddCardResponse></soap:Body></soap:Envelope>
