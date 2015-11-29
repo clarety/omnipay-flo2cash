@@ -124,7 +124,6 @@ class Response extends AbstractResponse
      */
     public function getCardReference()
     {
-        $data = $this->data;
         return isset($this->cardReference) &&
                      strlen($this->cardReference)
                      ? $this->cardReference
