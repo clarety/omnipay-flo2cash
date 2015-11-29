@@ -13,7 +13,7 @@ class Response extends AbstractResponse
     private $status = false;
     private $cardReference;
     private $message;
-    private $xml; /* Response XML from Gateway */
+    private $responsexml; /* Response XML from Gateway */
 
 
     /**
@@ -50,20 +50,20 @@ class Response extends AbstractResponse
         if (isset($xml->AddCardResponse)) {
             ;
             # Response from AddCard returned
-            $response = (array) $xml->AddCardResponse; # Cast the result as array
-            if (isset($response['AddCardResult'])
-                && strlen($response['AddCardResult']) > 0) {
+            $this->responsexml = (array) $xml->AddCardResponse; # Cast the result as array
+            if (isset($this->responsexml['AddCardResult'])
+                && strlen($this->responsexml['AddCardResult']) > 0) {
                 ;
                 $this->status = "true";
-                $this->cardReference = $response['AddCardResult'];
+                $this->cardReference = $this->responsexml['AddCardResult'];
                 $this->message = 'Success';
             }
 
         } elseif (isset($xml->RemoveCardResponse)) {
             ;
             # Response from RemoveCard returned
-            $response = (array) $xml->RemoveCardResponse; # Cast the result as array
-            if (isset($response['RemoveCardResult'])) {
+            $this->responsexml = (array) $xml->RemoveCardResponse; # Cast the result as array
+            if (isset($this->responsexml['RemoveCardResult'])) {
                 ;
                 $this->status = "true";
                 $this->message = 'Success';
@@ -71,17 +71,17 @@ class Response extends AbstractResponse
         } elseif (isset($data->ProcessPurchaseResponse)
                 or isset($data->ProcessPurchaseByTokenResponse)) {
         # Response from ProcessPurchase returned
-            $xml = (array)isset($data->ProcessPurchaseResponse) ?
+            $this->responsexml = (array)isset($data->ProcessPurchaseResponse) ?
                                 $data->ProcessPurchaseResponse->transactionresult :
                                 $data->ProcessPurchaseByTokenResponse->transactionresult;
             # SOAP response is identical between two types so we can process alike.
-            $this->message = $xml['Message'];
-            if ($xml['Status'] == 'SUCCESSFUL') {
+            $this->message = $this->responsexml['Message'];
+            if ($this->responsexml['Status'] == 'SUCCESSFUL') {
                 $this->status = "true";
             }
         } elseif (isset($data->ProcessRefundResponse)) {
         # Response from ProcessRefund returned
-            $xml_array = (array) $data->ProcessRefundResponse;
+            $responsexml = (array) $data->ProcessRefundResponse;
         }
     }
 
@@ -103,7 +103,7 @@ class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return isset($this->response['TransactionId']) ? $this->response['TransactionId'] : null;
+        return isset($this->responsexml['TransactionId']) ? $this->responsexml['TransactionId'] : null;
     }
     /**
      *
@@ -113,8 +113,8 @@ class Response extends AbstractResponse
      */
     public function getMessage()
     {
-        return isset($this->response['Message']) ?
-               $this->response['Message'] : $this->message;
+        return isset($this->responsexml['Message']) ?
+               $this->responsexml['Message'] : $this->message;
     }
     /**
      *
