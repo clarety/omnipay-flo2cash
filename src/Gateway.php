@@ -34,11 +34,6 @@ class Gateway extends AbstractGateway
                      );
     }
 
-    public function authorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Flo2cash\Message\AuthorizeRequest', $parameters);
-    }
-
     public function createCard(array $parameters = array())
     {
         return $this->createRequest('Omnipay\Flo2cash\Message\CreateCardRequest', $parameters);
@@ -54,6 +49,11 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('Omnipay\Flo2cash\Message\PurchaseRequest', $parameters);
+    }
+    
+    public function refund(array $parameters = array())
+    {
+        return null;
     }
      /**
      * Set the AccountId.
