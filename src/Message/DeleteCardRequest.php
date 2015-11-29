@@ -7,6 +7,7 @@
  */
 
 namespace Omnipay\Flo2cash\Message;
+
 use DOMDocument;
 use SimpleXMLElement;
 
@@ -23,10 +24,16 @@ class DeleteCardRequest extends AbstractRequest
             false,
             '',
             true);
-        $data->addAttribute('xmlns', 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
+        $data->addAttribute(
+                            'xmlns',
+                            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
+                            );
         $data->Username = $this->getUsername();
         $data->Password = $this->getPassword();
         $data->CardToken = $this->getCardReference();
-        return array('Transaction' => $TransactionType, 'Data' => $data);
+        return array(
+                     'Transaction' => $TransactionType,
+                     'Data' => $data
+                     );
     }
 }
