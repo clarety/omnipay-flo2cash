@@ -26,5 +26,4 @@ class AuthorizeRequest extends AbstractRequest
 
         return $this->response = new Response($this, $data);
     }
-    
 }
