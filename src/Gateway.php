@@ -55,12 +55,20 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('Omnipay\Flo2cash\Message\PurchaseRequest', $parameters);
     }
-    
+     /**
+     * Set the AccountId.
+     *
+     * @param string AccountId for this charge
+     */
     public function setAccountId($value)
     {
          return $this->setParameter('AccountId', $value);
     }
-    
+     /**
+     * Get the AccountId.
+     *
+     * @returns string AccountId for this charge
+     */
     public function getAccountId()
     {
          return $this->getParameter('AccountId');
@@ -85,7 +93,7 @@ class Gateway extends AbstractGateway
     {
          return $this->getParameter('Password');
     }
-        /**
+     /**
      * Set the storeCard.
      *
      * @param string $StoreCard for this charge
