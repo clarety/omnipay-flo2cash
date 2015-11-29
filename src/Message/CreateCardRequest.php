@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: aaron
+ * CreateCardRequest.
+ * User: Aaron Guise
  * Date: 26/11/2015
  * Time: 10:20 PM
  */
@@ -17,49 +17,22 @@ class CreateCardRequest extends AbstractRequest
     {
         $this->validate('card');
         $this->getCard()->validate();
-        
+        $TransactionType = 'AddCard';
+
         $CreditCard = $this->getCard();
-        
-        $data = new SimpleXMLElement("<AddCard></AddCard>" , LIBXML_NOERROR, false, '', true);
+
+        $data = new SimpleXMLElement("<$TransactionType></$TransactionType>",
+                                     LIBXML_NOERROR,
+                                     false,
+                                     '',
+                                     true);
         $data->addAttribute('xmlns', 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
         $data->Username = $this->getUsername();
         $data->Password = $this->getPassword();
         $data->CardNumber = $CreditCard->getNumber();
-        $data->CardExpiry = $CreditCard->getExpiryDate('dy');
+        $data->CardExpiry = $CreditCard->getExpiryDate('my');
         $data->CardType = $this->getCardType();
         $data->CardName = $CreditCard->getName();
-        return array('Transaction' => 'AddCard', 'Data' => $data);
-    }
-
-    public function sendData($data)
-    {
-        $TransactionType = $data['Transaction'];
-        $Data = $data['Data'];
-        
-        $document = new DOMDocument('1.0', 'UTF-8');
-        $envelope = $document->appendChild(
-        $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope')
-        );
-        $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema-instance');
-        $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema');
-        $body = $envelope->appendChild($document->createElement('soap:Body'));
-        $body->appendChild($document->importNode(dom_import_simplexml($data), true));
-        $document->preserveWhiteSpace = false;
-        $document->formatOutput = true
-        
-        $xml = $document->saveXML();
-        $xml = trim($xml);
-
-        $headers = array(
-            'Content-Type' => 'text/xml; charset=utf-8',
-            'SOAPAction' => $this->getNamespace() . '/' . $TransactionType);
-            
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), 
-                                               $headers, 
-                                               $xml
-                                               );
-        $httpResponse = $httpRequest->send();
-        return $this->response = new Response($this, $httpResponse->getBody());
-    
+        return array('Transaction' => $TransactionType, 'Data' => $data);
     }
 }
