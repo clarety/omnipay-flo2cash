@@ -14,139 +14,150 @@ use Omnipay\Flo2cash;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $namespace = "http://ics2ws.com/";
+    protected $namespace = "http://www.flo2cash.co.nz/webservices/paymentwebservice";
 
-    const LIVE_ENDPOINT = 'https://demo.flo2cash.co.nz/ws/paymentws.asmx?wsdl';
-    const TEST_ENDPOINT = 'https://demo.flo2cash.co.nz/ws/paymentws.asmx?wsdl';
+    const LIVE_ENDPOINT = 'https://secure.flo2cash.co.nz/ws/paymentws.asmx';
+    const TEST_ENDPOINT = 'https://demo.flo2cash.co.nz/ws/paymentws.asmx';
 
     const VERSION = '0.1';
 
-    /**
-     * @var \stdClass The generated SOAP request, saved immediately before a transaction is run.
-     */
-    protected $request;
-
-    /**
-     * @var \stdClass The retrieved SOAP response, saved immediately after a transaction is run.
-     */
-    protected $response;
-
-    /**
-     * @var float The amount of time in seconds to wait for both a connection and a response.
-     * Total potential wait time is this value times 2 (connection + response).
-     */
-    public $timeout = 10;
-
-
-    /**
-     * Create a new Request
-     *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
-     */
-    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
-    {
-        parent::__construct($httpClient, $httpRequest);
-        $this->request = new \stdClass();
-    }
-
-
-    #region Flo2cash Soap Transaction
 
     public function sendData($data)
     {
-        $data = $this->getData();
+        $TransactionType = $data['Transaction'];
+        $Data = $data['Data'];
 
-        $this->request->Reference = $this->getReference();
-        $this->request->AccountId = $this->getAccountId();
-        $this->request->Username = $this->getUsername();
-        $this->request->Password = $this->getPassword();
-
-        $context_options = array(
-            'http' => array(
-                'timeout' => $this->timeout,
-            ),
+        $document = new DOMDocument('1.0', 'UTF-8');
+        $envelope = $document->appendChild(
+            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/',
+                'soap:Envelope')
         );
+        $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema-instance');
+        $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema');
+        $body = $envelope->appendChild($document->createElement('soap:Body'));
+        $body->appendChild($document->importNode(dom_import_simplexml($Data), true));
+        $document->preserveWhiteSpace = false;
+        $document->formatOutput = true;
 
-        $context = stream_context_create($context_options);
+        $xml = $document->saveXML();
+        $xml = trim($xml);
+        $headers = array(
+            "Content-type" => "text/xml;charset=utf-8",
+            "Accept" => "text/xml",
+            "Cache-Control" => "no-cache",
+            "Pragma" => "no-cache",
+            "SOAPAction" => $this->getNamespace() . '/' . $TransactionType ,
+            "Content-length" => strlen($xml));
 
-        // options we pass into the soap client
-        $soap_options = array(
-            'compression' => SOAP_COMPRESSION_ACCEPT |
-                             SOAP_COMPRESSION_GZIP |
-                             SOAP_COMPRESSION_DEFLATE,  // turn on HTTP compression
-            'encoding' => 'utf-8',        // set the internal character encoding to avoid random conversions
-            'exceptions' => true,        // throw SoapFault exceptions when there is an error
-            'connection_timeout' => $this->timeout,
-            'stream_context' => $context,
+        $httpRequest = $this->httpClient->post($this->getEndpoint(),
+            $headers,
+            $xml
         );
+        $req = (string) $httpRequest;
+        $file = 'log.txt';
+        // Write the contents to the file,
+        $data = array('The Request:'. "\n", $req . "\n\n");
+        // using the FILE_APPEND flag to append the content to the end of the file
+        // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
+        file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
+        $httpResponse = $httpRequest->send();
+        $request = (string) $httpResponse;
+        $file = 'log.txt';
+        // Write the contents to the file,
+        $data = array('The Response:'. "\n", $request . "\n\n");
+        // using the FILE_APPEND flag to append the content to the end of the file
+        // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
+        file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
+        return $this->response = new Response($this, $httpResponse->getBody());
 
-        // if we're in test mode, don't cache the wsdl
-        if ($this->getTestMode()) {
-            $soap_options['cache_wsdl'] = WSDL_CACHE_NONE;
-        } else {
-            $soap_options['cache_wsdl'] = WSDL_CACHE_BOTH;
-        }
-
-
-        try {
-            // create the soap client
-            $soap = new \SoapClient($this->getEndpoint(), $soap_options);
-        } catch (SoapFault $sf) {
-            throw new \Exception($sf->getMessage(), $sf->getCode());
-        }
-
-        // save the request so you can get back what was generated at any point
-        $response = $soap->$data['Transaction']($this->request);
-
-        return $this->response = new Response($this->request, $response);
     }
 
-
     /**
-     * @return \stdClass
+     * Set the AccountID.
+     *
+     * @param number $AccountId Your Flo2Cash AccountId
      */
-    protected function createCard()
+    public function setAccountId($AccountId)
     {
-        /** @var \Omnipay\Common\CreditCard $creditCard */
-        $creditCard = $this->getCard();
-
-        $cyberSourceCreditCard = new \stdClass();
-        $cyberSourceCreditCard->accountNumber = $creditCard->getNumber();
-        $cyberSourceCreditCard->expirationMonth = $creditCard->getExpiryMonth();
-        $cyberSourceCreditCard->expirationYear = $creditCard->getExpiryYear();
-
-        if (!is_null($creditCard->getCvv())) {
-            $cyberSourceCreditCard->cvNumber = $creditCard->getCvv();
-        }
-
-        if (!is_null($this->getCardType())) {
-            $cyberSourceCreditCard->cardType = $this->getCardType();
-        }
-
-        return $cyberSourceCreditCard;
+        $this->setParameter('AccountId', $AccountId);
     }
 
-    #region CyberSource Parameters
-
     /**
-     * @param string $merchantId
+     * Get the AccountID.
+     *
+     * @returns string $AccountId Your Flo2Cash AccountId
      */
-    public function setMerchantId($merchantId)
+    public function getAccountId()
     {
-        $this->setParameter('merchantId', $merchantId);
+        return $this->getParameter('AccountId');
     }
 
+
     /**
-     * return string
+     * Set the Particular.
+     *
+     * @param string $Particular for this charge
      */
-    public function getMerchantId()
+    public function setParticular($value)
     {
-        return $this->getParameter('merchantId');
+        $this->setParameter('Particular', $value);
     }
 
     /**
-     * @param string $username
+     * Get the Particular.
+     *
+     * @returns string $Particular for this charge.
+     */
+    public function getParticular()
+    {
+        return $this->getParameter('Particular');
+    }
+
+
+    /**
+     * Set the Email.
+     *
+     * @param string $Email for this charge
+     */
+    public function setEmail($value)
+    {
+        $this->setParameter('email', $value);
+    }
+
+    /**
+     * Get the Email.
+     *
+     * @returns string $Email for this charge.
+     */
+    public function getEmail()
+    {
+        return $this->getParameter('email');
+    }
+
+    /**
+     * Set the storeCard.
+     *
+     * @param string $StoreCard for this charge
+     */
+    public function setStoreCard($value)
+    {
+        $this->setParameter('storeCard', $value);
+    }
+
+    /**
+     * Get the storeCard.
+     *
+     * @returns string $Email for this charge.
+     */
+    public function getStoreCard()
+    {
+        return $this->getParameter('storeCard');
+    }
+
+    /**
+     * Set the username.
+     *
+     * @param string $username for your Flo2Cash Account
      */
     public function setUsername($username)
     {
@@ -154,7 +165,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * return string
+     * Get the username.
+     *
+     * @returns string $username for your Flo2Cash Account
      */
     public function getUsername()
     {
@@ -162,7 +175,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @param string $password
+     * Set the password.
+     *
+     * @param string $password for your Flo2Cash Account
      */
     public function setPassword($password)
     {
@@ -170,7 +185,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * return string
+     * Get the password.
+     *
+     * @returns string $password for your Flo2Cash Account
      */
     public function getPassword()
     {
@@ -194,22 +211,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @param BankAccount $bankAccount
-     */
-    public function setBankAccount($bankAccount)
-    {
-        $this->setParameter('bankAccount', $bankAccount);
-    }
-
-    /**
-     * return BankAccount
-     */
-    public function getBankAccount()
-    {
-        return $this->getParameter('bankAccount');
-    }
-
-    /**
      * The reference number that we set on the Klinche side.
      *
      * @param string $merchantReferenceCode
@@ -226,28 +227,37 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->getParameter('merchantReferenceCode');
     }
-
-
-    #endregion
-
-
-    #region Omnipay Stuff
-
-    public function getEndpoint()
+    /**
+     * The reference number that we set on the Klinche side.
+     *
+     * @param string $value
+     */
+    public function setCardReference($value)
     {
-        return $this->getTestMode() ? self::TEST_ENDPOINT : self::LIVE_ENDPOINT;
+        $this->setParameter('cardReference', $value);
     }
+
+    /**
+     * The reference number that we set on the Klinche side.
+     *
+     * @param string $merchantReferenceCode
+     */
+    public function getCardReference()
+    {
+        return $this->getParameter('cardReference');
+    }
+
 
     public function getCardTypes()
     {
         return array(
-            'visa' => '001',
-            'mastercard' => '002',
-            'amex' => '003',
-            'discover' => '004',
-            'diners_club' => '005',
-            'carte_blanche' => '006',
-            'jcb' => '007',
+            'visa' => 'Visa',
+            'mastercard' => 'MC',
+            'amex' => 'N/A',
+            'discover' => 'N/A',
+            'diners_club' => 'N/A',
+            'carte_blanche' => 'N/A',
+            'jcb' => 'N/A',
         );
     }
 
@@ -258,9 +268,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return empty($types[$brand]) ? null : $types[$brand];
     }
 
+    public function getNamespace()
+    {
+        return "http://www.flo2cash.co.nz/webservices/paymentwebservice";
+    }
     public function getEndpoint()
     {
         return $this->getTestMode() ? self::TEST_ENDPOINT : self::LIVE_ENDPOINT;
     }
-    #endregion
 }
