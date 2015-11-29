@@ -104,4 +104,24 @@ class Gateway extends AbstractGateway
     {
         return $this->getParameter('storeCard');
     }
+
+        /**
+     * Set the Email.
+     *
+     * @param string $Email for this charge
+     */
+    public function setEmail($value)
+    {
+        $this->setParameter('email', $value);
+    }
+
+    /**
+     * Get the Email.
+     *
+     * @returns string $Email for this charge.
+     */
+    public function getEmail()
+    {
+        return $this->getParameter('email');
+    }
 }
