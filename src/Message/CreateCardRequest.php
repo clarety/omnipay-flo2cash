@@ -23,16 +23,16 @@ class CreateCardRequest extends AbstractRequest
         $CreditCard = $this->getCard();
 
         $data = new SimpleXMLElement(
-                                     "<$TransactionType></$TransactionType>",
-                                     LIBXML_NOERROR,
-                                     false,
-                                     '',
-                                     true
-                                     );
+            "<$TransactionType></$TransactionType>",
+            LIBXML_NOERROR,
+            false,
+            '',
+            true
+        );
         $data->addAttribute(
-                            'xmlns',
-                            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
-                            );
+            'xmlns',
+            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
+        );
         $data->Username = $this->getUsername();
         $data->Password = $this->getPassword();
         $data->CardNumber = $CreditCard->getNumber();

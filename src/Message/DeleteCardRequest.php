@@ -19,15 +19,17 @@ class DeleteCardRequest extends AbstractRequest
         $TransactionType = 'RemoveCard';
 
 
-        $data = new SimpleXMLElement("<$TransactionType></$TransactionType>",
+        $data = new SimpleXMLElement(
+            "<$TransactionType></$TransactionType>",
             LIBXML_NOERROR,
             false,
             '',
-            true);
+            true
+        );
         $data->addAttribute(
-                            'xmlns',
-                            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
-                            );
+            'xmlns',
+            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
+        );
         $data->Username = $this->getUsername();
         $data->Password = $this->getPassword();
         $data->CardToken = $this->getCardReference();

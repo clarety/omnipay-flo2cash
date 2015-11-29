@@ -47,45 +47,40 @@ class Response extends AbstractResponse
         /*
          *  Data from the request can now be processed.
          */
-        if (isset($xml->AddCardResponse)){;
+        if (isset($xml->AddCardResponse)) {
+            ;
             # Response from AddCard returned
             $response = (array) $xml->AddCardResponse; # Cast the result as array
             if (isset($response['AddCardResult'])
-                && strlen($response['AddCardResult']) > 0)
-            {;
+                && strlen($response['AddCardResult']) > 0) {
+                ;
                 $this->status = "true";
                 $this->cardReference = $response['AddCardResult'];
                 $this->message = 'Success';
             }
 
-        }
-        elseif (isset($xml->RemoveCardResponse))
-        {;
+        } elseif (isset($xml->RemoveCardResponse)) {
+            ;
             # Response from RemoveCard returned
             $response = (array) $xml->RemoveCardResponse; # Cast the result as array
-            if (isset($response['RemoveCardResult']))
-            {;
+            if (isset($response['RemoveCardResult'])) {
+                ;
                 $this->status = "true";
                 $this->message = 'Success';
             }
-        }
-        elseif (isset($data->ProcessPurchaseResponse)
-                or isset($data->ProcessPurchaseByTokenResponse))
-        {
-            # Response from ProcessPurchase returned
+        } elseif (isset($data->ProcessPurchaseResponse)
+                or isset($data->ProcessPurchaseByTokenResponse)) {
+        # Response from ProcessPurchase returned
             $xml = (array)isset($data->ProcessPurchaseResponse) ?
                                 $data->ProcessPurchaseResponse->transactionresult :
                                 $data->ProcessPurchaseByTokenResponse->transactionresult;
             # SOAP response is identical between two types so we can process alike.
             $this->message = $xml['Message'];
-            if ($xml['Status'] == 'SUCCESSFUL')
-            {
+            if ($xml['Status'] == 'SUCCESSFUL') {
                 $this->status = "true";
             }
-        }
-        elseif (isset($data->ProcessRefundResponse))
-        {
-            # Response from ProcessRefund returned
+        } elseif (isset($data->ProcessRefundResponse)) {
+        # Response from ProcessRefund returned
             $xml_array = (array) $data->ProcessRefundResponse;
         }
     }

@@ -17,21 +17,23 @@ class PurchaseRequest extends AbstractRequest
 
         if (!is_null($this->getCard())) {
             $this->validate(
-                            'amount',
-                            'card',
-                            'merchantReferenceCode'
-                            );
+                'amount',
+                'card',
+                'merchantReferenceCode'
+            );
             $this->getCard()->validate();
             $TransactionType = 'ProcessPurchase';
-            $data = new SimpleXMLElement("<$TransactionType></$TransactionType>",
+            $data = new SimpleXMLElement(
+                "<$TransactionType></$TransactionType>",
                 LIBXML_NOERROR,
                 false,
                 '',
-                true);
+                true
+            );
             $data->addAttribute(
-                                'xmlns',
-                                $this->getNamespace()
-                                );
+                'xmlns',
+                $this->getNamespace()
+            );
             $CreditCard = $this->getCard();
             $data->Username = $this->getUsername();
             $data->Password = $this->getPassword();
@@ -52,20 +54,22 @@ class PurchaseRequest extends AbstractRequest
                          );
         } elseif (!is_null($this->getCardReference())) {
             $this->validate(
-                            'cardReference',
-                            'amount',
-                            'merchantReferenceCode'
-                            );
+                'cardReference',
+                'amount',
+                'merchantReferenceCode'
+            );
             $TransactionType = 'ProcessPurchaseByToken';
-            $data = new SimpleXMLElement("<$TransactionType></$TransactionType>",
+            $data = new SimpleXMLElement(
+                "<$TransactionType></$TransactionType>",
                 LIBXML_NOERROR,
                 false,
                 '',
-                true);
+                true
+            );
             $data->addAttribute(
-                                'xmlns',
-                                $this->getNamespace()
-                                );
+                'xmlns',
+                $this->getNamespace()
+            );
             $data->Username = $this->getUsername();
             $data->Password = $this->getPassword();
             $data->AccountId = $this->getAccountId();
