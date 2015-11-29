@@ -2,7 +2,7 @@
 
 namespace Omnipay\Flo2cash\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Flo2cash\Message\AbstractRequest;
 
 /**
  * Dummy Authorize Request
