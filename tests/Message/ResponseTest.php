@@ -1,11 +1,23 @@
 <?php
 
-namespace Omnipay\Flo2cash\Message;
+namespace Omnipay\Flo2cash;
 
 use Omnipay\Tests\TestCase;
 
 class ResponseTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+
+        $this->options = array(
+            'amount' => '10.00',
+            'card' => $this->getValidCard(),
+        );
+    }
+    
     public function testCreateCardSuccess()
     {
         $this->setMockHttpResponse('CreateCardSuccess.txt');
