@@ -25,6 +25,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('10.00', (string) $data->{'Amount'});
         $this->assertSame('TestSuite', (string) $data->{'Reference'});
         $this->assertEquals('ProcessPurchase', (string) $response['Transaction']);
+        $this->assertArrayHasKey('Transaction', $response );
+        $this->assertArrayHasKey('Data', $response );
     }
     
     public function testGetDataToken()
