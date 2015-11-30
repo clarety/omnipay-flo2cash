@@ -38,6 +38,16 @@ class ResponseTest extends TestCase
         $this->assertEquals('P1511W0005042864', $response->getTransactionReference());
         $this->assertEquals('Transaction Successful', $response->getMessage());
     }
+    
+    public function testPurchaseByTokenSuccess()
+    {
+        $this->setMockHttpResponse('ProcessPurchaseByTokenSuccess.txt');
+        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('P1511W0005042863', $response->getTransactionReference());
+        $this->assertEquals('Transaction Successful', $response->getMessage());
+    }
     //public function testSuccess()
     //{
     //    $response = new Response(
