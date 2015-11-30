@@ -21,7 +21,7 @@ class PurchaseRequestTest extends TestCase
         ));
         $response = $this->request->getData();
         $data = $response['Data'];
-        $this->assertInstanceOf('SimpleXMLElement', $data);
+        $this->assertSame($this->request->getNamespace(), 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
         $this->assertSame('10.00', (string) $data->{'Amount'});
         $this->assertSame('TestSuite', (string) $data->{'Reference'});
         $this->assertEquals('ProcessPurchase', (string) $response['Transaction']);
@@ -36,6 +36,7 @@ class PurchaseRequestTest extends TestCase
         ));
         $response = $this->request->getData();
         $data = $response['Data'];
+        $this->assertSame($this->request->getNamespace(), 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
         $this->assertSame('10.00', (string) $data->Amount);
         $this->assertSame('TestSuite', (string) $data->Reference);
         $this->assertSame('11111111', (string) $data->CardToken);
