@@ -42,10 +42,6 @@ class PurchaseRequest extends AbstractRequest
             $data->CardHolderName = $CreditCard->getName();
             $data->CardCSC = $CreditCard->getCvv();
             $data->StoreCard = $this->getStoreCard();
-            return array(
-                         'Transaction' => $TransactionType,
-                         'Data' => $data
-                         );
         } elseif (!is_null($this->getCardReference())) {
             $this->validate(
                 'cardReference',
@@ -72,11 +68,10 @@ class PurchaseRequest extends AbstractRequest
             $data->Particular = $this->getParticular();
             $data->Email = $this->getEmail();
             $data->CardToken = $this->getCardReference();
+        }
             return array(
                          'Transaction' => $TransactionType,
                          'Data' => $data
                          );
-        }
-
     }
 }
