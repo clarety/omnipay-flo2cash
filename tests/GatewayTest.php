@@ -91,15 +91,6 @@ class GatewayTest extends GatewayTestCase
         $this->assertEquals('12345', $response->getTransactionReference());
         $this->assertEquals('Declined', $response->getMessage());
     }*/
-    public function testCreateCardSuccess()
-    {
-        $this->setMockHttpResponse('CreateCardSuccess.txt');
-        $response = $this->gateway->createCard($this->options)->send();
-        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('77719482654', $response->getCardReference());
-        $this->assertEquals('Success', $response->getMessage());
-    }
 
 /*    public function testAuthorizeSuccess()
     {
