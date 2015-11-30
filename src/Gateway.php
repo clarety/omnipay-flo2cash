@@ -30,7 +30,6 @@ class Gateway extends AbstractGateway
                      'Username' => 'myUsername',
                      'Password' => 'myPassword',
                      'storeCard' => 'false',
-                     'email' => '',
                      );
     }
 
@@ -53,7 +52,7 @@ class Gateway extends AbstractGateway
     
     public function refund(array $parameters = array())
     {
-        return null;
+        return $this->createRequest('Omnipay\Flo2cash\Message\RefundRequest', $parameters);
     }
      /**
      * Set the AccountId.
@@ -100,7 +99,7 @@ class Gateway extends AbstractGateway
      */
     public function setStoreCard($value)
     {
-        $this->setParameter('storeCard', $value);
+        return $this->setParameter('storeCard', $value);
     }
 
     /**
@@ -120,7 +119,7 @@ class Gateway extends AbstractGateway
      */
     public function setEmail($value)
     {
-        $this->setParameter('email', $value);
+        return $this->setParameter('email', $value);
     }
 
     /**
