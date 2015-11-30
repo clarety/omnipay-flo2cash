@@ -24,6 +24,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertInstanceOf('SimpleXMLElement', $data);
         $this->assertSame('10.00', (string) $data->{'Amount'});
         $this->assertSame('TestSuite', (string) $data->{'Reference'});
+        $this->assertEquals('ProcessPurchase', (string) $response['Transaction']);
     }
     
     public function testGetDataToken()
@@ -38,5 +39,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('10.00', (string) $data->Amount);
         $this->assertSame('TestSuite', (string) $data->Reference);
         $this->assertSame('11111111', (string) $data->CardToken);
+        $this->assertEquals('ProcessPurchaseByToken', (string) $response['Transaction']);
+
     }
 }
