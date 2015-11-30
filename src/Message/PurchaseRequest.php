@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aaron
- * Date: 29/11/2015
- * Time: 9:30 PM
- */
 
 namespace Omnipay\Flo2cash\Message;
 
