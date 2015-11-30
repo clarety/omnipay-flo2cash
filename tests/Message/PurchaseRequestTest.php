@@ -3,32 +3,40 @@
 namespace Omnipay\Flo2cash\Message;
 
 use Omnipay\Tests\TestCase;
+use SimpleXMLElement;
 
 class PurchaseRequestTest extends TestCase
 {
     public function setUp()
     {
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
-            'amount' => '10.00',
-            'merchantReferenceCode' => 'TestSuite'
-        ));
     }
 
     public function testGetData()
     {
-        $this->request->data['card'] = $this->getValidCard();
-        $data = $this->request->getData();
-        $this->assertSame('10.00', $data['amount']);
-        $this->assertSame('TestSuite', $data['merchantReferenceCode']);
+        $this->request->initialize(array(
+            'amount' => '10.00',
+            'merchantReferenceCode' => 'TestSuite',
+            'card' => $this->getValidCard(),
+        ));
+        $response = $this->request->getData();
+        $data = $response['Data'];
+        $this->assertInstanceOf('SimpleXMLElement', $data);
+        $this->assertSame('10.00', (string) $data->{'Amount'});
+        $this->assertSame('TestSuite', (string) $data->{'Reference'});
     }
     
     public function testGetDataToken()
     {
-        $this->request->data['cardReference'] = '11111111';
-        $data = $this->request->getData();
-        $this->assertSame('10.00', $data['amount']);
-        $this->assertSame('TestSuite', $data['merchantReferenceCode']);
-        $this->assertSame('11111111', $data['cardReference']);
+        $this->request->initialize(array(
+            'amount' => '10.00',
+            'merchantReferenceCode' => 'TestSuite',
+            'cardReference' => '11111111',
+        ));
+        $response = $this->request->getData();
+        $data = $response['Data'];
+        $this->assertSame('10.00', (string) $data->Amount);
+        $this->assertSame('TestSuite', (string) $data->Reference);
+        $this->assertSame('11111111', (string) $data->CardToken);
     }
 }
