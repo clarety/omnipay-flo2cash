@@ -26,18 +26,8 @@ class Response extends AbstractResponse
     {
         $this->request = $request;
         $this->response = $data;
-        $this->processResponse($this->response);
-    }
 
-    /**
-     * Response Processor
-     * Take response from the gateway and give result
-     *
-     * @param mixed $data
-     */
-    public function processResponse($data)
-    {
-        /* Strip soap:Body tags so can be parsed
+         /* Strip soap:Body tags so can be parsed
          * by SimpleXMLElement
          *
          */
