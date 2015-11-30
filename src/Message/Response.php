@@ -58,12 +58,12 @@ class Response extends AbstractResponse
                 $this->status = "true";
                 $this->message = 'Success';
             }
-        } elseif (isset($data->ProcessPurchaseResponse)
-                or isset($data->ProcessPurchaseByTokenResponse)) {
+        } elseif (isset($xml->ProcessPurchaseResponse)
+                or isset($xml->ProcessPurchaseByTokenResponse)) {
         # Response from ProcessPurchase returned
-            $this->responsexml = (array)isset($data->ProcessPurchaseResponse) ?
-                                $data->ProcessPurchaseResponse->transactionresult :
-                                $data->ProcessPurchaseByTokenResponse->transactionresult;
+            $this->responsexml = isset($xml->ProcessPurchaseResponse) ?
+                                (array) $xml->ProcessPurchaseResponse->transactionresult :
+                                (array) $xml->ProcessPurchaseByTokenResponse->transactionresult;
             # SOAP response is identical between two types so we can process alike.
             $this->message = $this->responsexml['Message'];
             if ($this->responsexml['Status'] == 'SUCCESSFUL') {

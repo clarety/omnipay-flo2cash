@@ -15,17 +15,28 @@ class ResponseTest extends TestCase
         $this->options = array(
             'amount' => '10.00',
             'card' => $this->getValidCard(),
+            'merchantReferenceCode' => 'Testing'
         );
     }
     
     public function testCreateCardSuccess()
     {
+
         $this->setMockHttpResponse('CreateCardSuccess.txt');
         $response = $this->gateway->createCard($this->options)->send();
         $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('77719482654', $response->getCardReference());
         $this->assertEquals('Success', $response->getMessage());
+    }
+    public function testPurchaseSuccess()
+    {
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('P1511W0005042864', $response->getTransactionReference());
+        $this->assertEquals('Transaction Successful', $response->getMessage());
     }
     //public function testSuccess()
     //{

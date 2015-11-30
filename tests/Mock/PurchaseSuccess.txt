@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET
+Strict-Transport-Security: max-age=31536000
+Date: Sun, 29 Nov 2015 10:07:23 GMT
+Content-Length: 779
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPurchaseResponse xmlns="http://www.flo2cash.co.nz/webservices/paymentwebservice"><transactionresult><TransactionId>P1511W0005042864</TransactionId><OriginalTransactionId /><Type>PURCHASE</Type><AccountId>621247</AccountId><Status>SUCCESSFUL</Status><ReceiptNumber>25050477</ReceiptNumber><AuthCode>116137</AuthCode><Amount>10.00</Amount><Reference>Test</Reference><Particular /><Message>Transaction Successful</Message><BlockedReason /><CardStored>false</CardStored><CardToken /></transactionresult></ProcessPurchaseResponse></soap:Body></soap:Envelope>
