@@ -30,6 +30,7 @@ class Gateway extends AbstractGateway
                      'Username' => 'myUsername',
                      'Password' => 'myPassword',
                      'storeCard' => 'false',
+                     'email' => '',
                      );
     }
 
