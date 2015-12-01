@@ -27,7 +27,16 @@ class ResponseTest extends TestCase
         $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('77719482654', $response->getCardReference());
-        $this->assertEquals('Success', $response->getMessage());
+        $this->assertEquals('Successfully Added Card', $response->getMessage());
+    }
+
+    public function testRemoveCardSuccess()
+    {
+        $this->setMockHttpResponse('RemoveCardSuccess.txt');
+        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('Successfully Removed Card', $response->getMessage());
     }
     public function testPurchaseSuccess()
     {
