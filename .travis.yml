@@ -10,12 +10,7 @@ php:
 before_script:
   - composer install -n --dev --prefer-source
 
-after_script:
-  - vendor/bin/test-reporter
-  
-addons:
-    code_climate:
-        repo_token: 2f15845e8bb7a9da647b803815eaf64801b652f621c13ac0ff5e463bc2da571
-
 script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text
 
+after_script: 
+  - ./codeclimate.sh
