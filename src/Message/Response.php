@@ -31,7 +31,7 @@ class Response extends AbstractResponse
          * by SimpleXMLElement
          *
          */
-        $replacements = array('<soap:Body>','</soap:Body>');
+        $replacements = array('<soap:Body>','</soap:Body>','<soap:Fault>','</soap:Fault>');
         $data = str_replace($replacements, '', $data);
         $xml = new SimpleXMLElement($data);
         /*
