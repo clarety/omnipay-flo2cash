@@ -33,7 +33,8 @@ class ResponseTest extends TestCase
     public function testRemoveCardSuccess()
     {
         $this->setMockHttpResponse('RemoveCardSuccess.txt');
-        $response = $this->gateway->purchase($this->options)->send();
+        $this->options['cardReference'] = '11111111111';
+        $response = $this->gateway->deleteCard($this->options)->send();
         $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('Successfully Removed Card', $response->getMessage());
