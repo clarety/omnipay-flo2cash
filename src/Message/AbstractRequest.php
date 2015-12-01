@@ -233,7 +233,21 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->getParameter('cardReference');
     }
+     /*
+     * @param string $transactionKey
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->setParameter('transactionId', $transactionId);
+    }
 
+    /**
+     * return string
+     */
+    public function getTransactionId()
+    {
+        return $this->getParameter('transactionId');
+    }
 
     public function getCardTypes()
     {
