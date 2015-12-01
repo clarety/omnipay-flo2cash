@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/guisea/omnipay-flo2cash.png?branch=master)](https://travis-ci.org/guisea/omnipay-flo2cash)
 [![Code Climate](https://codeclimate.com/repos/565d7932310a26005901d935/badges/06668d8b3b4c0da47f47/gpa.svg)](https://codeclimate.com/repos/565d7932310a26005901d935/feed)
+[![Test Coverage](https://codeclimate.com/repos/565d7932310a26005901d935/badges/06668d8b3b4c0da47f47/coverage.svg)](https://codeclimate.com/repos/565d7932310a26005901d935/coverage)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Dummy support for Omnipay.
