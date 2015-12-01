@@ -5,3 +5,6 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+exclude_paths:
+- "**/*.md"
+- "*.md"
