@@ -16,11 +16,12 @@ class RefundRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('card');
-        $this->getCard()->validate();
-        $TransactionType = 'AddCard';
-
-        $CreditCard = $this->getCard();
+        $this->validate(
+                        'transactionId',
+                        'amount',
+                        'merchantReferenceCode'
+                        );
+        $TransactionType = 'ProcessRefund';
 
         $data = new SimpleXMLElement(
             "<$TransactionType></$TransactionType>",
@@ -31,14 +32,15 @@ class RefundRequest extends AbstractRequest
         );
         $data->addAttribute(
             'xmlns',
-            'http://www.flo2cash.co.nz/webservices/paymentwebservice'
+            $this->getNamespace()
         );
         $data->Username = $this->getUsername();
         $data->Password = $this->getPassword();
-        $data->CardNumber = $CreditCard->getNumber();
-        $data->CardExpiry = $CreditCard->getExpiryDate('my');
-        $data->CardType = $this->getCardType();
-        $data->CardName = $CreditCard->getName();
+        $data->OriginalTransactionId = $this->getTransactionId();
+        $data->Amount = $this->getAmount();
+        $data->Reference = $this->getMerchantReferenceCode();
+        $data->Particular = $this->getParticular();
+        $data->Email = $this->getEmail();
         return array(
                      'Transaction' => $TransactionType,
                      'Data' => $data
