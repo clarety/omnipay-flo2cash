@@ -198,22 +198,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @param string $transactionKey
-     */
-    public function setTransactionKey($transactionKey)
-    {
-        $this->setParameter('transactionKey', $transactionKey);
-    }
-
-    /**
-     * return string
-     */
-    public function getTransactionKey()
-    {
-        return $this->getParameter('transactionKey');
-    }
-
-    /**
      * The reference number that we set on the Klinche side.
      *
      * @param string $merchantReferenceCode
