@@ -26,8 +26,20 @@ class Response extends AbstractResponse
     {
         $this->request = $request;
         $this->response = $data;
-
-         /* Strip soap:Body tags so can be parsed
+        $this->processResponse($this->response);
+    }
+    
+    /**
+     *
+     * Process the response
+     *
+     * @param $responseObj response returned from request
+     *
+     */
+    
+    private function processResponse($data)
+    {
+           /* Strip soap:Body tags so can be parsed
          * by SimpleXMLElement
          *
          */
@@ -44,7 +56,7 @@ class Response extends AbstractResponse
             if (isset($this->responsexml['AddCardResult'])
                 && strlen($this->responsexml['AddCardResult']) > 0) {
                 ;
-                $this->status = "true";
+                $this->status = true;
                 $this->cardReference = $this->responsexml['AddCardResult'];
                 $this->message = 'Successfully Added Card';
             }
@@ -55,7 +67,7 @@ class Response extends AbstractResponse
             $this->responsexml = (array) $xml->RemoveCardResponse; # Cast the result as array
             if (isset($this->responsexml['RemoveCardResult'])) {
                 ;
-                $this->status = "true";
+                $this->status = true;
                 $this->message = 'Successfully Removed Card';
             }
         } elseif (isset($xml->ProcessPurchaseResponse)
@@ -67,13 +79,23 @@ class Response extends AbstractResponse
             # SOAP response is identical between two types so we can process alike.
             $this->message = $this->responsexml['Message'];
             if ($this->responsexml['Status'] == 'SUCCESSFUL') {
-                $this->status = "true";
+                $this->status = true;
             }
-        } elseif (isset($data->ProcessRefundResponse)) {
+        } elseif (isset($xml->ProcessRefundResponse)) {
         # Response from ProcessRefund returned
-            $responsexml = (array) $data->ProcessRefundResponse;
+            $this->responsexml = (array) $xml->ProcessRefundResponse->transactionresult;
+            if ($this->responsexml['Status'] == 'SUCCESSFUL') {
+                $this->status = true;
+            }
+        } elseif (isset($xml->faultactor)) {
+            # This is a SOAP fault returning
+             $responsexml = (array) $xml->detail->error;
+             $this->status = false;
+             $this->message = $responsexml['errormessage'];
         }
     }
+    
+    
 
     /**
      *
@@ -83,7 +105,7 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->status) && $this->status;
+        return $this->status;
     }
     /**
      *
