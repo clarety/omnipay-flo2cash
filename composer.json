@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/flo2cash",
+    "name": "guisea/omnipay-flo2cash",
     "type": "library",
     "description": "flo2cash driver for the Omnipay payment processing library",
     "keywords": [
