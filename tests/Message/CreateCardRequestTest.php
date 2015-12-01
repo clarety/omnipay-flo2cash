@@ -19,11 +19,9 @@ class CreateCardRequestTest extends TestCase
             'card' => $card,
         ));
         $response = $this->request->getData();
-        $data = $response['Data'];
         $this->assertSame($this->request->getNamespace(), 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
         $this->assertEquals('AddCard', (string) $response['Transaction']);
-        $this->assertArrayHasKey('Transaction', $response );
-        $this->assertArrayHasKey('Data', $response );
+        $this->assertArrayHasKey('Transaction', $response);
+        $this->assertArrayHasKey('Data', $response);
     }
-
 }
