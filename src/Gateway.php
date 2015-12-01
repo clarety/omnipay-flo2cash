@@ -6,13 +6,11 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\Flo2cash\Message\AuthorizeRequest;
 
 /**
- * Dummy Gateway
+ * Flo2cash Gateway
  *
- * This gateway is useful for testing. It simply authorizes any payment made using a valid
- * credit card number and expiry.
+ * This gateway is to process payments against the gateway provided by Flo2cash.
+ * (https://www.flo2cash.co.nz/)
  *
- * Any card number which passes the Luhn algorithm and ends in an even number is authorized,
- * for example: 4242424242424242
  *
  * Any card number which passes the Luhn algorithm and ends in an odd number is declined,
  * for example: 4111111111111111
