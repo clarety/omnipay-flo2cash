@@ -44,7 +44,7 @@ class ResponseTest extends TestCase
         $response = $this->gateway->purchase($this->options)->send();
         $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('P1511W0005042864', $response->getTransactionReference());
+        $this->assertEquals('P1511W0005042864', $response->getTransactionId());
         $this->assertEquals('Transaction Successful', $response->getMessage());
     }
     
@@ -54,7 +54,7 @@ class ResponseTest extends TestCase
         $response = $this->gateway->purchase($this->options)->send();
         $this->assertInstanceOf('\Omnipay\Flo2cash\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('P1511W0005042863', $response->getTransactionReference());
+        $this->assertEquals('P1511W0005042863', $response->getTransactionId());
         $this->assertEquals('Transaction Successful', $response->getMessage());
     }
     //public function testSuccess()
