@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET
+Strict-Transport-Security: max-age=31536000
+Date: Sun, 29 Nov 2015 10:07:23 GMT
+Content-Length: 1029
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ProcessRefundResponse xmlns="http://www.flo2cash.co.nz/webservices/paymentwebservice">
+      <transactionresult>
+        <TransactionId>P1512W0005042959</TransactionId>
+        <OriginalTransactionId>P1512W0005042951</OriginalTransactionId>
+        <Type>REFUND</Type>
+        <AccountId>int</AccountId>
+        <Status>SUCCESSFUL</Status>
+        <ReceiptNumber>12453678</ReceiptNumber>
+        <AuthCode>some-aauth</AuthCode>
+        <Amount>10.00</Amount>
+        <Reference>Refund Test</Reference>
+        <Particular>Nada</Particular>
+        <Message>Refund Successful</Message>
+        <BlockedReason></BlockedReason>
+        <CardStored>False</CardStored>
+        <CardToken></CardToken>
+      </transactionresult>
+    </ProcessRefundResponse>
+  </soap:Body>
+</soap:Envelope>
