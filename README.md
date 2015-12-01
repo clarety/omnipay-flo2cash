@@ -16,7 +16,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/flo2cash": "~2.0"
+        "guisea/omnipay-flo2cash": "~2.0"
     }
 }
 ```
