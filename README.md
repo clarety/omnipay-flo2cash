@@ -17,7 +17,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/dummy": "~2.0"
+        "omnipay/flo2cash": "~2.0"
     }
 }
 ```
