@@ -46,7 +46,7 @@ class Response extends AbstractResponse
                 ;
                 $this->status = "true";
                 $this->cardReference = $this->responsexml['AddCardResult'];
-                $this->message = 'Success';
+                $this->message = 'Successfully Added Card';
             }
 
         } elseif (isset($xml->RemoveCardResponse)) {
@@ -56,7 +56,7 @@ class Response extends AbstractResponse
             if (isset($this->responsexml['RemoveCardResult'])) {
                 ;
                 $this->status = "true";
-                $this->message = 'Success';
+                $this->message = 'Successfully Removed Card';
             }
         } elseif (isset($xml->ProcessPurchaseResponse)
                 or isset($xml->ProcessPurchaseByTokenResponse)) {
