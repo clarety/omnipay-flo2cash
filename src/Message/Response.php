@@ -14,6 +14,7 @@ class Response extends AbstractResponse
     private $cardReference;
     private $message;
     private $responsexml; /* Response XML from Gateway */
+    private $details;
 
 
     /**
@@ -28,7 +29,7 @@ class Response extends AbstractResponse
         $this->response = $data;
         $this->processResponse($this->response);
     }
-    
+
     /**
      *
      * Process the response
@@ -139,6 +140,19 @@ class Response extends AbstractResponse
         return isset($this->cardReference) &&
                      strlen($this->cardReference)
                      ? $this->cardReference
+                     : null;
+    }
+    /**
+     *
+     * Return the transaction details as (array) from the gateway
+     * 
+     * @returns array $this->responsexml
+     */
+    public function getDetailsArray()
+    {
+        
+        return isset($this->responsexml)
+                     ? $this->responsexml
                      : null;
     }
 }

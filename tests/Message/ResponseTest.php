@@ -38,6 +38,8 @@ class ResponseTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('P1511W0005042864', $response->getTransactionId());
         $this->assertEquals('Transaction Successful', $response->getMessage());
+        $txnDetails = $response->getDetailsArray();
+        $this->assertEquals('Transaction Successful', $txnDetails['Message']);
     }
     
     public function testPurchaseByTokenSuccess()
