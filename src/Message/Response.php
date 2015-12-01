@@ -91,7 +91,7 @@ class Response extends AbstractResponse
      *
      * @returns string $transactionReference
      */
-    public function getTransactionReference()
+    public function getTransactionId()
     {
         return isset($this->responsexml['TransactionId']) ? $this->responsexml['TransactionId'] : null;
     }
