@@ -17,10 +17,10 @@ class RefundRequest extends AbstractRequest
     public function getData()
     {
         $this->validate(
-                        'transactionId',
-                        'amount',
-                        'merchantReferenceCode'
-                        );
+            'transactionId',
+            'amount',
+            'merchantReferenceCode'
+        );
         $TransactionType = 'ProcessRefund';
 
         $data = new SimpleXMLElement(
