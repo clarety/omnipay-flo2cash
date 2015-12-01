@@ -17,6 +17,8 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(array(
             'amount' => '10.00',
             'merchantReferenceCode' => 'TestSuite',
+            'Particular' => 'Testing',
+            'storeCard' => 'false',
             'card' => $this->getValidCard(),
         ));
         $response = $this->request->getData();
@@ -24,6 +26,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame($this->request->getNamespace(), 'http://www.flo2cash.co.nz/webservices/paymentwebservice');
         $this->assertSame('10.00', (string) $data->{'Amount'});
         $this->assertSame('TestSuite', (string) $data->{'Reference'});
+        $this->assertSame('Testing', (string) $data->{'Particular'});
         $this->assertEquals('ProcessPurchase', (string) $response['Transaction']);
         $this->assertArrayHasKey('Transaction', $response );
         $this->assertArrayHasKey('Data', $response );
