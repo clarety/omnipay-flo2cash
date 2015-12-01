@@ -70,16 +70,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $request = (string) $httpRequest;
         $file = 'log.txt';
         // Write the contents to the file,
-        $data = array('The Request:'. "\n", $req . "\n\n");
+        $data = array('The Request:'. "\n", $request . "\n\n");
         // using the FILE_APPEND flag to append the content to the end of the file
         // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
         file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
         
         $httpResponse = $httpRequest->send();
-        $request = (string) $httpResponse;
+        $response = (string) $httpResponse;
         $file = 'log.txt';
         // Write the contents to the file,
-        $data = array('The Response:'. "\n", $request . "\n\n");
+        $data = array('The Response:'. "\n", $response . "\n\n");
         // using the FILE_APPEND flag to append the content to the end of the file
         // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
         file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
