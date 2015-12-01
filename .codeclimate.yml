@@ -1,0 +1,7 @@
+engines:
+  fixme:
+    enabled: false
+  phpcodesniffer:
+    enabled: true
+  phpmd:
+    enabled: true
