@@ -1,0 +1,10 @@
+HTTP/1.1 500 Internal Server Error
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET
+Strict-Transport-Security: max-age=31536000
+Date: Tue, 01 Dec 2015 03:38:18 GMT
+Content-Length: 531
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>Card token not found</faultstring><faultactor>RemoveCard</faultactor><detail><error><errortype>Parameter</errortype><errornumber>2000</errornumber><errormessage>Card token not found</errormessage></error></detail></soap:Fault></soap:Body></soap:Envelope>
