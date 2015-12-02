@@ -150,7 +150,10 @@ class Response extends AbstractResponse
      */
     public function getDetailsArray()
     {
-        
+        if (isset($this->message)){
+            # Add the message to the responsexml
+            $this->responsexml['Message'] = $this->message;
+        }
         return isset($this->responsexml)
                      ? $this->responsexml
                      : null;
