@@ -19,7 +19,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     const LIVE_ENDPOINT = 'https://secure.flo2cash.co.nz/ws/paymentws.asmx';
     const TEST_ENDPOINT = 'https://demo.flo2cash.co.nz/ws/paymentws.asmx';
 
-    const VERSION = '0.1';
+    const VERSION = '2.1.1';
 
 
     public function sendData($data)
@@ -67,22 +67,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $xml
         );
 
-        $request = (string) $httpRequest;
-        $file = 'log.txt';
-        // Write the contents to the file,
-        $data = array('The Request:'. "\n", $request . "\n\n");
-        // using the FILE_APPEND flag to append the content to the end of the file
-        // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
-        file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
-        
         $httpResponse = $httpRequest->send();
-        $response = (string) $httpResponse;
-        $file = 'log.txt';
-        // Write the contents to the file,
-        $data = array('The Response:'. "\n", $response . "\n\n");
-        // using the FILE_APPEND flag to append the content to the end of the file
-        // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
-        file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
+        
         return $this->response = new Response($this, $httpResponse->getBody());
 
     }
