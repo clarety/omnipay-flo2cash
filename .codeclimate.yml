@@ -4,6 +4,9 @@ engines:
     exclude_fingerprints:
     - 8d83e140b70aada8c454a638ba3c4cd0
     - c42b72af850c2590419dfa0bb4d15004
+    checks:
+      bug:
+        enabled: false
   phpcodesniffer:
     enabled: true
   phpmd:
