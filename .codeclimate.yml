@@ -11,6 +11,14 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+ratings:
+  paths:
+  - src/**
+  - lib/**
+  - bin/**
+  - "**.php"
+  - "**.pl"
+  - "**.pm"
 exclude_paths:
 - "**/*.md"
 - "*.md"
