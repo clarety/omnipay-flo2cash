@@ -13,7 +13,7 @@
 
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements Dummy support for Omnipay.
+processing library for PHP 5.3+. This package implements Flo2cash support for Omnipay.
 
 ## Installation
 
