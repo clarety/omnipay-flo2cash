@@ -4,6 +4,13 @@ engines:
     checks:
       bug:
         enabled: true
+     paths:
+     - src/**
+     - lib/**
+     - bin/**
+     - "**.php"
+     - "**.pl"
+     - "**.pm"
   phpcodesniffer:
     enabled: true
   phpmd:
