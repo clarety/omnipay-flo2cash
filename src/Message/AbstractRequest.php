@@ -24,8 +24,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function sendData($data)
     {
-        $TransactionType = $data['Transaction'];
-        $Data = $data['Data'];
+        $transactionType = $data['Transaction'];
+        $request = $data['Data'];
 
         $document = new DOMDocument('1.0', 'UTF-8');
         $envelope = $document->appendChild(
@@ -37,7 +37,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema-instance');
         $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema');
         $body = $envelope->appendChild($document->createElement('soap:Body'));
-        $body->appendChild($document->importNode(dom_import_simplexml($Data), true));
+        $body->appendChild($document->importNode(dom_import_simplexml($request), true));
         $document->preserveWhiteSpace = false;
         $document->formatOutput = true;
 
@@ -48,7 +48,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             "Accept" => "text/xml",
             "Cache-Control" => "no-cache",
             "Pragma" => "no-cache",
-            "SOAPAction" => $this->getNamespace() . '/' . $TransactionType ,
+            "SOAPAction" => $this->getNamespace() . '/' . $transactionType ,
             "Content-length" => strlen($xml));
 
         # Catch naughty 500 errors thrown by the gateway
@@ -78,9 +78,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @param number $AccountId Your Flo2Cash AccountId
      */
-    public function setAccountId($AccountId)
+    public function setAccountId($value)
     {
-        $this->setParameter('AccountId', $AccountId);
+        $this->setParameter('AccountId', $value);
     }
 
     /**
