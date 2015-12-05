@@ -21,10 +21,10 @@ class RefundRequest extends AbstractRequest
             'amount',
             'merchantReferenceCode'
         );
-        $TransactionType = 'ProcessRefund';
+        $transactionType = 'ProcessRefund';
 
         $data = new SimpleXMLElement(
-            "<$TransactionType></$TransactionType>",
+            "<$transactionType></$transactionType>",
             LIBXML_NOERROR,
             false,
             '',
@@ -42,7 +42,7 @@ class RefundRequest extends AbstractRequest
         $data->Particular = $this->getParticular();
         $data->Email = $this->getEmail();
         return array(
-                     'Transaction' => $TransactionType,
+                     'Transaction' => $transactionType,
                      'Data' => $data
                      );
     }
