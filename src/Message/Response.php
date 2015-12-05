@@ -14,7 +14,6 @@ class Response extends AbstractResponse
     private $cardReference;
     private $message;
     private $responsexml; /* Response XML from Gateway */
-    private $details;
 
 
     /**
