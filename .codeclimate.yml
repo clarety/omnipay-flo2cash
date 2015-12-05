@@ -4,13 +4,18 @@ engines:
     checks:
       bug:
         enabled: true
-    paths:
-     - src/**
-     - lib/**
-     - bin/**
-     - "**.php"
-     - "**.pl"
-     - "**.pm"
+  paths:
+    - src/**
+    - lib/**
+    - bin/**
+    - "**.php"
+    - "**.pl"
+    - "**.pm"
+  exclude_paths:
+      - "**/*.md"
+      - "*.md"
+      - "**/*.yml"
+      - "*.yml"
   phpcodesniffer:
     enabled: true
   phpmd:
