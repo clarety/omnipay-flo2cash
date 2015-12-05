@@ -200,9 +200,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @param string $merchantReferenceCode
      */
-    public function setMerchantReferenceCode($merchantReferenceCode)
+    public function setMerchantReferenceCode($value)
     {
-        $this->setParameter('merchantReferenceCode', $merchantReferenceCode);
+        $this->setParameter('merchantReferenceCode', $value);
     }
 
     /**
