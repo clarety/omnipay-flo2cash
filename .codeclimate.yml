@@ -4,7 +4,7 @@ engines:
     checks:
       bug:
         enabled: true
-     paths:
+    paths:
      - src/**
      - lib/**
      - bin/**
