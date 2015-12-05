@@ -11,6 +11,11 @@ engines:
      - "**.php"
      - "**.pl"
      - "**.pm"
+     exclude_paths:
+      - "**/*.md"
+      - "*.md"
+      - "**/*.yml"
+      - "*.yml"
   phpcodesniffer:
     enabled: true
   phpmd:
