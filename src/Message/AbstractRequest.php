@@ -17,7 +17,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $namespace = "http://www.flo2cash.co.nz/webservices/paymentwebservice";
 
     const LIVE_ENDPOINT = 'https://secure.flo2cash.co.nz/ws/paymentws.asmx';
-    const TEST_ENDPOINT = 'https://demo.flo2cash.co.nz/ws/paymentws.asmx';
+    const TEST_ENDPOINT = 'https://sandbox.flo2cash.com/ws/paymentws.asmx';
 
     const VERSION = '2.1.1';
 
