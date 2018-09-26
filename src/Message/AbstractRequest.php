@@ -21,6 +21,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     const VERSION = '2.1.1';
 
+    protected $xml = '';
 
     public function sendData($data)
     {
@@ -50,6 +51,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             "Pragma" => "no-cache",
             "SOAPAction" => $this->getNamespace() . '/' . $transactionType ,
             "Content-length" => strlen($xml));
+
+        //record the xml
+        $this->xml = $document->saveXml($body);
 
         # Catch naughty 500 errors thrown by the gateway
         $this->httpClient->getEventDispatcher()->addListener(
@@ -274,5 +278,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getEndpoint()
     {
         return $this->getTestMode() ? self::TEST_ENDPOINT : self::LIVE_ENDPOINT;
+    }
+
+	/**
+	 * Returns the xml sent to flo2cash
+	 * @return string
+	 */
+    public function getXml()
+    {
+	    return str_replace(array('<soap:Body>','</soap:Body>'), '', $this->xml);
     }
 }

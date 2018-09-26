@@ -15,6 +15,7 @@ class Response extends AbstractResponse
     private $message;
     private $responsexml; /* Response XML from Gateway */
 
+	private $xml;
 
     /**
      * Constructor
@@ -51,6 +52,7 @@ class Response extends AbstractResponse
          */
         if (isset($xml->AddCardResponse)) {
             ;
+	        $this->xml = $xml->AddCardResponse->saveXML();
             # Response from AddCard returned
             $this->responsexml = (array) $xml->AddCardResponse; # Cast the result as array
             if (isset($this->responsexml['AddCardResult'])
@@ -63,6 +65,7 @@ class Response extends AbstractResponse
 
         } elseif (isset($xml->RemoveCardResponse)) {
             ;
+	        $this->xml = $xml->RemoveCardResponse->saveXML();
             # Response from RemoveCard returned
             $this->responsexml = (array) $xml->RemoveCardResponse; # Cast the result as array
             if (isset($this->responsexml['RemoveCardResult'])) {
@@ -72,22 +75,30 @@ class Response extends AbstractResponse
             }
         } elseif (isset($xml->ProcessPurchaseResponse)
                 or isset($xml->ProcessPurchaseByTokenResponse)) {
-        # Response from ProcessPurchase returned
-            $this->responsexml = isset($xml->ProcessPurchaseResponse) ?
-                                (array) $xml->ProcessPurchaseResponse->transactionresult :
-                                (array) $xml->ProcessPurchaseByTokenResponse->transactionresult;
+
+	        # Response from ProcessPurchase returned
+        	if(isset($xml->ProcessPurchaseResponse)) {
+        		$this->xml = $xml->ProcessPurchaseResponse->saveXML();
+		        $this->responsexml = (array) $xml->ProcessPurchaseResponse->transactionresult;
+	        } else {
+		        $this->xml = $xml->ProcessPurchaseByTokenResponse->saveXML();
+		        $this->responsexml = (array) $xml->ProcessPurchaseByTokenResponse->transactionresult;
+	        }
+
             # SOAP response is identical between two types so we can process alike.
             $this->message = $this->responsexml['Message'];
             if ($this->responsexml['Status'] == 'SUCCESSFUL') {
                 $this->status = true;
             }
         } elseif (isset($xml->ProcessRefundResponse)) {
+	        $this->xml = $xml->ProcessRefundResponse->saveXML();
         # Response from ProcessRefund returned
             $this->responsexml = (array) $xml->ProcessRefundResponse->transactionresult;
             if ($this->responsexml['Status'] == 'SUCCESSFUL') {
                 $this->status = true;
             }
         } elseif (isset($xml->faultactor)) {
+	        $this->xml = $xml->faultactor->saveXML();
             # This is a SOAP fault returning
              $responsexml = (array) $xml->detail->error;
              $this->status = false;
@@ -156,5 +167,9 @@ class Response extends AbstractResponse
         return isset($this->responsexml)
                      ? $this->responsexml
                      : null;
+    }
+
+    public function getXml(){
+    	return $this->xml;
     }
 }
