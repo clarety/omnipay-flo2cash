@@ -19,7 +19,7 @@ class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'Flo2cash Payments WS';
+        return 'Flo2cash Payments WS Bug Fix';
     }
 
     public function getDefaultParameters()
@@ -29,8 +29,7 @@ class Gateway extends AbstractGateway
                      'Password' => 'myPassword',
                      'storeCard' => 'false',
                      'email' => '',
-                     'testMode' => 'true',
-                     );
+                     'testMode' => 'true');
     }
 
     public function createCard(array $parameters = array())

@@ -252,7 +252,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return array(
             'visa' => 'Visa',
             'mastercard' => 'MC',
-            'amex' => 'N/A',
+            'amex' => 'AMEX',
             'discover' => 'N/A',
             'diners_club' => 'N/A',
             'carte_blanche' => 'N/A',
