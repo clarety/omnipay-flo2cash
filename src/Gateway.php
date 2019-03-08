@@ -130,4 +130,13 @@ class Gateway extends AbstractGateway
     {
         return $this->getParameter('email');
     }
+
+	/**
+	 * added to log server / api request errors
+	 * @param $func
+	 * @return $this
+	 */
+    public function setLoggingFunction($func) {
+	    return $this->setParameter('loggingFunction', $func);
+    }
 }

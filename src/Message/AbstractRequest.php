@@ -55,9 +55,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         //record the xml
         $this->xml = $document->saveXml($body);
 
+	    $this->addListenersToHttpClient();
+
         # Catch naughty 500 errors thrown by the gateway
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
+        $this->httpClient->getEventDispatcher()->addListener('request.error',
             function ($event) {
                 if ($event['response']->isServerError()) {
                     $event->stopPropagation();
@@ -75,6 +76,53 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         
         return $this->response = new Response($this, $httpResponse->getBody());
 
+    }
+
+    protected function addListenersToHttpClient() {
+	    $loggingFunction = $this->getLoggingFunction();
+	    if(!is_callable($loggingFunction)) return;
+	    $returnRequestResponse = function ($event) {
+		    $statusCode = '-';
+	    	if(is_callable(@$event['response']->getStatusCode)) $statusCode = @$event['response']->getStatusCode();
+		    return (
+			    '#HTTP Status Code: '.$statusCode. PHP_EOL.
+		    	'#REQUEST' . PHP_EOL.
+		    	(string) $event['request'] . PHP_EOL.
+			    '#RESPONSE' . PHP_EOL.
+		        (string) $event['response'] . PHP_EOL
+			    . PHP_EOL
+		    );
+	    };
+
+	    $this->httpClient->getEventDispatcher()->addListener(
+		    'request.before_send', function ($event) use ($loggingFunction) {
+		        $loggingFunction('request.before_send;');
+	        }
+	    );
+	    $this->httpClient->getEventDispatcher()->addListener(
+		    'request.sent', function ($event) use ($loggingFunction) {
+		      $loggingFunction('request.sent;');
+	      }
+	    );
+	    $this->httpClient->getEventDispatcher()->addListener(
+		    'request.complete', function ($event) use ($loggingFunction) {
+		      $loggingFunction('request.complete' . PHP_EOL);
+	        }
+	    );
+	    # Catch naughty 500 errors thrown by the gateway
+	    $this->httpClient->getEventDispatcher()->addListener(
+		    'request.error', function ($event) use ($loggingFunction, $returnRequestResponse) {
+		        $loggingFunction('request.error' . PHP_EOL);
+		        $loggingFunction($returnRequestResponse($event));
+		    }
+	    );
+	    $this->httpClient->getEventDispatcher()->addListener(
+		    'request.exception',
+		    function ($event) use ($loggingFunction, $returnRequestResponse) {
+			    $loggingFunction('request.exception' . PHP_EOL);
+			    $loggingFunction($returnRequestResponse($event));
+		    }
+	    );
     }
 
     /**
@@ -288,4 +336,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
 	    return str_replace(array('<soap:Body>','</soap:Body>'), '', $this->xml);
     }
+
+	public function setLoggingFunction($func) {
+		return $this->setParameter('loggingFunction', $func);
+	}
+	public function getLoggingFunction() {
+		return $this->getParameter('loggingFunction');
+	}
 }
